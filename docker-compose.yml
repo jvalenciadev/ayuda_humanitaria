@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: ayuda_humanitaria_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ayuda_humanitaria
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ayuda_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ayuda_humanitaria_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@humanitaria.gob.bo
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - ayuda_network
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    container_name: ayuda_humanitaria_api
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://admin:admin123@postgres:5432/ayuda_humanitaria?schema=public
+      - PORT=3001
+      - JWT_SECRET=seguridad_institucional_key_2026_xyz
+    depends_on:
+      - postgres
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - ayuda_network
+
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    container_name: ayuda_humanitaria_web
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+    depends_on:
+      - api
+    networks:
+      - ayuda_network
+
+volumes:
+  postgres_data:
+  uploads_data:
+
+networks:
+  ayuda_network:
+    driver: bridge

@@ -1,0 +1,239 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Rol {
+  id       String    @id
+  nombre   String
+  usuarios Usuario[]
+
+  @@map("roles")
+}
+
+model Usuario {
+  id                   String            @id @default(uuid())
+  nombre               String
+  email                String            @unique
+  password             String
+  rolId                String
+  rol                  Rol               @relation(fields: [rolId], references: [id])
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  deletedAt            DateTime?
+  logs                 Log[]
+  verificaciones       Verificacion[]
+  pronunciamientos     Pronunciamiento[]
+  comunicados          Comunicado[]
+  hospitalesReportados Hospital[]        @relation("ReportadoPor")
+
+  @@map("usuarios")
+}
+
+model Departamento {
+  id             String             @id // e.g. "LP", "CB", "SC", "OR", "PT", "TJ", "CH", "BE", "PD"
+  nombre         String
+  organizaciones Organizacion[]
+  ayudas         AyudaHumanitaria[]
+  hospitales     Hospital[]
+  reportes       Reporte[]
+  victimas       Victima[]
+
+  @@map("departamentos")
+}
+
+model Organizacion {
+  id              String            @id @default(uuid())
+  nombre          String
+  responsable     String
+  contacto        String
+  email           String
+  departamentoId  String
+  departamento    Departamento      @relation(fields: [departamentoId], references: [id])
+  ciudad          String
+  descripcion     String
+  logo            String?
+  web             String?
+  redesSociales   Json? // Stores structured data like { twitter, facebook, instagram }
+  tipo            String // "EMPRESA_PRIVADA" | "ORGANIZACION_SOCIAL" | "ONG" | "FUNDACION" | "INSTITUCION_PUBLICA" | "COLECTIVO_CIUDADANO"
+  sector          String // "Salud" | "Alimentación" | "Refugio" | "Logística" | "Otros"
+  verificado      Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+  verificaciones  Verificacion[]
+  pronunciamientos Pronunciamiento[]
+
+  @@map("organizaciones")
+}
+
+model Pronunciamiento {
+  id             String         @id @default(uuid())
+  titulo         String
+  contenido      String
+  organizacionId String
+  organizacion   Organizacion   @relation(fields: [organizacionId], references: [id])
+  autorId        String
+  autor          Usuario        @relation(fields: [autorId], references: [id])
+  estado         String         @default("PENDIENTE") // "PENDIENTE" | "VERIFICADO" | "RECHAZADO"
+  evidencia      String? // PDF or document link
+  multimedia     Archivo[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  deletedAt      DateTime?
+  verificaciones Verificacion[]
+
+  @@map("pronunciamientos")
+}
+
+model Comunicado {
+  id           String    @id @default(uuid())
+  titulo       String
+  contenido    String
+  fuente       String
+  autorId      String
+  autor        Usuario   @relation(fields: [autorId], references: [id])
+  estado       String    @default("VERIFICADO") // "PENDIENTE" | "VERIFICADO" | "RECHAZADO"
+  fechaHora    DateTime  @default(now())
+  documentoUrl String?
+  multimedia   Archivo[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  @@map("comunicados")
+}
+
+model AyudaHumanitaria {
+  id             String       @id @default(uuid())
+  tipologia      String // "MEDICAMENTOS" | "OXIGENO" | "ALIMENTOS" | "TRANSPORTE" | "REFUGIO" | "DONACIONES" | "RESCATE_ANIMAL" | "APOYO_PSICOLOGICO"
+  descripcion    String
+  urgencia       String // "BAJA" | "MEDIA" | "ALTA" | "CRITICA"
+  solicitante    String
+  contacto       String
+  departamentoId String
+  departamento   Departamento @relation(fields: [departamentoId], references: [id])
+  direccion      String
+  latitud        Float?
+  longitud       Float?
+  estado         String       @default("PENDIENTE") // "PENDIENTE" | "EN_PROCESO" | "ATENDIDO" | "RECHAZADO"
+  seguimiento    String?
+  evidencias     Archivo[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+
+  @@map("ayudas_humanitarias")
+}
+
+model Hospital {
+  id                    String    @id @default(uuid())
+  nombre                String
+  departamentoId        String
+  departamento          Departamento @relation(fields: [departamentoId], references: [id])
+  oxigenoDisponibilidad String // "SUFICIENTE" | "LIMITADO" | "CRITICO" | "AGOTADO"
+  camasLibres           Int       @default(0)
+  estadoGeneral         String // "ESTABLE" | "ALERTA" | "EMERGENCIA"
+  responsableNombre     String
+  responsableContacto   String
+  reportadoPorId        String
+  reportadoPor          Usuario   @relation("ReportadoPor", fields: [reportadoPorId], references: [id])
+  evidenciaUrl          String?
+  fechaReporte          DateTime  @default(now())
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  deletedAt             DateTime?
+
+  @@map("hospitales")
+}
+
+model Reporte {
+  id             String         @id @default(uuid())
+  titulo         String
+  descripcion    String
+  fuenteSocial   String?
+  departamentoId String
+  departamento   Departamento   @relation(fields: [departamentoId], references: [id])
+  multimedia     Archivo[]
+  estado         String         @default("EN_REVISION") // "VERIFICADO" | "EN_REVISION" | "INFORMACION_FALSA"
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  deletedAt      DateTime?
+  verificaciones Verificacion[]
+
+  @@map("reportes")
+}
+
+model Victima {
+  id                 String       @id @default(uuid())
+  nombre             String
+  documentoIdentidad String?
+  edad               Int?
+  genero             String?
+  afectacionTipo     String // "LESIONADO" | "DESAPARECIDO" | "FALLECIDO" | "DAMNIFICADO"
+  detalles           String
+  contactoFamiliar   String?
+  departamentoId     String
+  departamento       Departamento @relation(fields: [departamentoId], references: [id])
+  localidad          String
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  deletedAt          DateTime?
+
+  @@map("victimas")
+}
+
+model Archivo {
+  id                 String            @id @default(uuid())
+  nombre             String
+  url                String
+  tipo               String // "IMAGE" | "VIDEO" | "DOCUMENT"
+  ayudaId            String?
+  ayuda              AyudaHumanitaria? @relation(fields: [ayudaId], references: [id])
+  comunicadoId       String?
+  comunicado         Comunicado?       @relation(fields: [comunicadoId], references: [id])
+  pronunciamientoId  String?
+  pronunciamiento    Pronunciamiento?  @relation(fields: [pronunciamientoId], references: [id])
+  reporteId          String?
+  reporte            Reporte?          @relation(fields: [reporteId], references: [id])
+  createdAt          DateTime          @default(now())
+
+  @@map("archivos")
+}
+
+model Verificacion {
+  id                String           @id @default(uuid())
+  usuarioId         String
+  usuario           Usuario          @relation(fields: [usuarioId], references: [id])
+  observacion       String
+  estadoAnterior    String?
+  estadoNuevo       String
+  organizacionId    String?
+  organizacion      Organizacion?    @relation(fields: [organizacionId], references: [id])
+  pronunciamientoId String?
+  pronunciamiento   Pronunciamiento? @relation(fields: [pronunciamientoId], references: [id])
+  reporteId         String?
+  reporte           Reporte?         @relation(fields: [reporteId], references: [id])
+  createdAt         DateTime         @default(now())
+
+  @@map("verificaciones")
+}
+
+model Log {
+  id          String   @id @default(uuid())
+  usuarioId   String?
+  usuario     Usuario? @relation(fields: [usuarioId], references: [id])
+  accion      String
+  tabla       String
+  registroId  String?
+  detalles    String
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@map("logs")
+}
