@@ -23,10 +23,23 @@ app.use(helmet({
   crossOriginResourcePolicy: false // Allows loading uploaded assets from frontend
 }));
 
+// In production, set CORS_ORIGIN to your Vercel frontend URL (e.g. https://mi-proyecto.vercel.app)
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',')
+  : ['http://localhost:3000'];
+
 app.use(cors({
-  origin: '*', // Customize this in production to point to our Next.js frontend port
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      return callback(null, true);
+    }
+    return callback(new Error(`Origen no permitido por CORS: ${origin}`));
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
