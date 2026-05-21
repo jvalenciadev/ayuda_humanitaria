@@ -14,7 +14,7 @@
     "prisma:seed": "npx prisma db seed",
     "dev:api": "npm run dev --workspace=apps/api",
     "dev:web": "npm run dev --workspace=apps/web",
-    "dev": "npm run dev:api & npm run dev:web",
+    "dev": "concurrently --kill-others-on-fail -n \"api,web\" -c \"cyan,magenta\" \"npm run dev:api\" \"npm run dev:web\"",
     "build:api": "npm run build --workspace=apps/api",
     "build:web": "npm run build --workspace=apps/web",
     "build": "npm run build:api && npm run build:web"
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
+    "concurrently": "^9.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }
