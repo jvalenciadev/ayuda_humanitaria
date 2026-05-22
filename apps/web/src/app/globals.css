@@ -5,8 +5,8 @@
   --background: #f8fafc;
   --foreground: #0f172a;
   
-  --primary-blue: #1e3a8a;
-  --primary-blue-light: #2563eb;
+  --primary-blue: #8d702a;
+  --primary-blue-light: #c8a94c;
   --humanitarian-green: #10b981;
   --alert-red: #ef4444;
   --dark-slate: #0f172a;
@@ -17,6 +17,21 @@
   --color-foreground: var(--foreground);
   --font-sans: 'Outfit', var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
+}
+
+/* Override Tailwind blue palette → gold #c8a94c */
+@theme {
+  --color-blue-50: #fcfaf4;
+  --color-blue-100: #f7edd3;
+  --color-blue-200: #eedca9;
+  --color-blue-300: #e2c476;
+  --color-blue-400: #d4ab53;
+  --color-blue-500: #c8a94c;
+  --color-blue-600: #b0903a;
+  --color-blue-700: #8d702a;
+  --color-blue-800: #6e5520;
+  --color-blue-900: #5a451a;
+  --color-blue-950: #31250d;
 }
 
 /* Base resets & typography */
@@ -46,7 +61,7 @@ body {
 
 /* Glow Accent Utilities */
 .glow-blue {
-  box-shadow: 0 0 30px -5px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 30px -5px rgba(200, 169, 76, 0.15);
 }
 .glow-emerald {
   box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.15);
@@ -60,7 +75,7 @@ body {
 
 /* Premium Gradients */
 .bg-gradient-premium {
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #8d702a 50%, #c8a94c 100%);
 }
 
 .bg-gradient-humanitarian {
@@ -68,7 +83,7 @@ body {
 }
 
 .text-gradient-institutional {
-  background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+  background: linear-gradient(90deg, #8d702a 0%, #c8a94c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -85,7 +100,7 @@ body {
 
 /* Smooth Card Gradients */
 .card-gradient-blue {
-  background: linear-gradient(135deg, #ffffff 0%, #f0f6ff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf4 100%);
 }
 .card-gradient-green {
   background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);

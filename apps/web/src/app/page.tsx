@@ -69,21 +69,21 @@ export default function Home() {
     <div className="animate-fade-in space-y-8 pb-16">
       
       {/* 1. Hero Dynamic Visual Panel */}
-      <section className="relative text-white overflow-hidden rounded-b-[2rem] shadow-xl bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 py-16 px-4 sm:px-6 lg:px-8 border-b border-blue-800">
+      <section className="relative text-white overflow-hidden rounded-b-[2rem] shadow-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-16 px-4 sm:px-6 lg:px-8 border-b border-[#c8a94c]/20">
         
         {/* Abstract Background Design */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.1),transparent)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(200,169,76,0.18),transparent_70%)] pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
           
           <div className="lg:col-span-8 space-y-6 text-center lg:text-left">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs font-semibold text-blue-300 uppercase tracking-wide">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#c8a94c]/20 border border-[#c8a94c]/40 text-xs font-semibold text-[#e2c476] uppercase tracking-wide">
               <ShieldCheck className="w-3.5 h-3.5" />
               Portal de Seguridad Civil Institucional
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
               Plataforma Nacional de <br />
-              <span className="text-blue-400">Ayuda Humanitaria</span> y Coordinación
+              <span className="text-[#c8a94c]">Ayuda Humanitaria</span> y Coordinación
             </h1>
             <p className="text-sm sm:text-base text-slate-350 max-w-2xl leading-relaxed">
               Herramienta oficial de articulación, verificación en campo y visualización de recursos logísticos y de salud ante catástrofes, desastres naturales o situaciones críticas nacionales.
@@ -103,7 +103,7 @@ export default function Home() {
               </div>
               <Link
                 href={`/ayuda?search=${searchQuery}`}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-xl text-xs tracking-wider uppercase transition-colors shrink-0 text-center"
+                className="w-full sm:w-auto bg-[#c8a94c] hover:bg-[#d4ab53] text-slate-900 font-bold py-3 px-6 rounded-xl text-xs tracking-wider uppercase transition-colors shrink-0 text-center shadow-md shadow-[#c8a94c]/25"
               >
                 Buscar
               </Link>
@@ -134,14 +134,14 @@ export default function Home() {
 
             <Link
               href="/reportes"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/25 border border-blue-500/20 transition-all group"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-[#c8a94c]/10 hover:bg-[#c8a94c]/20 border border-[#c8a94c]/25 transition-all group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-300">
+                <div className="w-8 h-8 rounded-lg bg-[#c8a94c]/20 flex items-center justify-center text-[#e2c476]">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs font-bold text-blue-300">Enviar Reporte Ciudadano</p>
+                  <p className="text-xs font-bold text-[#e2c476]">Enviar Reporte Ciudadano</p>
                   <p className="text-[10px] text-slate-350">Videos, fotos y evidencias</p>
                 </div>
               </div>

@@ -295,7 +295,7 @@ export default function CentroInformacionPage() {
           <div className="space-y-6">
             {/* Logistical Metrics Dashboard Panel */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-gradient-to-r from-blue-900 to-indigo-950 text-white p-5 rounded-2xl shadow-sm text-left relative overflow-hidden group">
+              <div className="bg-gradient-to-r from-blue-900 to-blue-950 text-white p-5 rounded-2xl shadow-sm text-left relative overflow-hidden group">
                 <div className="absolute right-3 top-3 opacity-15">
                   <Plane className="w-16 h-16 text-white group-hover:scale-110 transition-transform duration-500" />
                 </div>

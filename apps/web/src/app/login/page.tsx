@@ -59,7 +59,7 @@ export default function LoginPage() {
         
         {/* Brand Shield */}
         <div className="flex flex-col items-center text-center space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-blue-700 flex items-center justify-center text-white shadow-md shadow-blue-500/25">
+          <div className="w-12 h-12 rounded-2xl bg-[#c8a94c] flex items-center justify-center text-white shadow-md shadow-[#c8a94c]/30">
             <ShieldCheck className="w-7 h-7 stroke-[2]" />
           </div>
           <div>
@@ -117,7 +117,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-700 hover:bg-blue-600 text-white font-bold tracking-wider uppercase py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 hover-lift transition-all disabled:opacity-50"
+            className="w-full bg-[#c8a94c] hover:bg-[#d4ab53] text-slate-900 font-bold tracking-wider uppercase py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#c8a94c]/25 hover-lift transition-all disabled:opacity-50"
           >
             <LogIn className="w-4 h-4" />
             {loading ? 'Firmando credencial...' : 'Ingresar al Servidor'}

@@ -188,11 +188,11 @@ export default function DashboardPage() {
         {/* Top Banner Dashboard */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
-            <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">
+            <span className="text-[10px] font-bold text-[#b0903a] uppercase tracking-wider block">
               Panel Gubernamental Institucional
             </span>
             <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight mt-1 flex items-center gap-2">
-              <LayoutDashboard className="w-6 h-6 text-blue-800" />
+              <LayoutDashboard className="w-6 h-6" style={{ color: '#c8a94c' }} />
               Consola de Coordinación y Moderación
             </h1>
             <p className="text-xs text-slate-500 mt-1">
@@ -221,7 +221,7 @@ export default function DashboardPage() {
 
         {/* Real-time Notice banner */}
         {notification && (
-          <div className="p-3.5 bg-blue-600 border border-blue-500 rounded-xl text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-blue-500/10">
+          <div className="p-3.5 bg-[#c8a94c] border border-[#d4ab53] rounded-xl text-slate-900 font-bold text-xs flex items-center gap-2 shadow-md shadow-[#c8a94c]/20">
             <Info className="w-4 h-4 animate-bounce" />
             <span>{notification}</span>
           </div>
@@ -239,7 +239,7 @@ export default function DashboardPage() {
                 Firma Digital Activa
               </h4>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 font-extrabold flex items-center justify-center text-sm shadow-sm select-none">
+                <div className="w-10 h-10 rounded-xl bg-[#c8a94c]/20 text-[#8d702a] font-extrabold flex items-center justify-center text-sm shadow-sm select-none">
                   {currentUser.nombre.charAt(0)}
                 </div>
                 <div className="space-y-0.5">
@@ -249,7 +249,7 @@ export default function DashboardPage() {
               </div>
               <div className="mt-3.5 pt-3.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold">
                 <span className="text-slate-400">ROL ASIGNADO:</span>
-                <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-md uppercase tracking-wider">
+                <span className="px-2 py-0.5 bg-[#c8a94c]/15 text-[#8d702a] rounded-md uppercase tracking-wider">
                   {currentUser.rolId}
                 </span>
               </div>

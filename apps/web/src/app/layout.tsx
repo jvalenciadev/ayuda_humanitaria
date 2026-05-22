@@ -73,10 +73,10 @@ export default function RootLayout({
         <meta name="description" content="Portal oficial para la articulación, reporte y verificación de ayuda humanitaria ante emergencias y desastres." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white antialiased">
+      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-[#c8a94c] selection:text-white antialiased">
         
         {/* Institutional Top Bar Banner */}
-        <div className="bg-blue-900 text-white text-[11px] font-medium tracking-wider uppercase py-1.5 px-4 flex justify-between items-center shadow-inner select-none">
+        <div className="bg-[#c8a94c] text-slate-900 text-[11px] font-semibold tracking-wider uppercase py-1.5 px-4 flex justify-between items-center shadow-inner select-none">
           <div className="flex items-center gap-1.5">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             Plataforma Institucional Oficial • Estado Plurinacional de Bolivia
@@ -93,7 +93,7 @@ export default function RootLayout({
             
             {/* Logo and Brand */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+              <div className="w-10 h-10 rounded-xl bg-[#c8a94c] flex items-center justify-center text-white shadow-md shadow-[#c8a94c]/30 group-hover:scale-105 transition-transform duration-200">
                 <ShieldCheck className="w-6 h-6 stroke-[2]" />
               </div>
               <div>
@@ -141,7 +141,7 @@ export default function RootLayout({
                   </Link>
                   <div className="h-6 w-[1px] bg-slate-200"></div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-bold text-xs shadow-sm">
+                    <div className="w-8 h-8 rounded-full bg-[#c8a94c]/20 flex items-center justify-center text-[#8d702a] font-bold text-xs shadow-sm">
                       {user.nombre.charAt(0)}
                     </div>
                     <div className="text-left select-none">
@@ -171,7 +171,7 @@ export default function RootLayout({
             {/* Mobile Menu Button */}
             <div className="flex lg:hidden items-center gap-2">
               {user && (
-                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-bold text-xs">
+                <div className="w-8 h-8 rounded-full bg-[#c8a94c]/20 flex items-center justify-center text-[#8d702a] font-bold text-xs">
                   {user.nombre.charAt(0)}
                 </div>
               )}
@@ -256,7 +256,7 @@ export default function RootLayout({
               
               <div className="md:col-span-2 space-y-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                  <div className="w-8 h-8 rounded-lg bg-[#c8a94c] flex items-center justify-center text-white font-bold text-sm">
                     AH
                   </div>
                   <span className="font-bold text-sm text-white tracking-wide uppercase">
