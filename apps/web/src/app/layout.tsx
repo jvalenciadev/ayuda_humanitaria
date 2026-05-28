@@ -6,15 +6,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import './globals.css';
 import { 
   ShieldCheck, 
-  Activity, 
-  MapPin, 
-  Users, 
   FileText, 
   Bell, 
   LayoutDashboard, 
   LogIn, 
   LogOut, 
   Heart,
+  MapPin,
   Menu,
   X
 } from 'lucide-react';
@@ -59,10 +57,8 @@ export default function RootLayout({
   };
 
   const navLinks = [
-    { href: '/organizaciones', label: 'Organizaciones', icon: Users },
     { href: '/centro-informacion', label: 'Centro de Información', icon: FileText },
     { href: '/ayuda', label: 'Ayuda Humanitaria', icon: Heart },
-    { href: '/hospitales', label: 'Monitor Hospitales', icon: Activity },
     { href: '/reportes', label: 'Reportes Ciudadanos', icon: MapPin },
   ];
 
@@ -250,7 +246,7 @@ export default function RootLayout({
         </main>
 
         {/* Global Footer */}
-        <footer className="bg-slate-900 text-slate-350 border-t border-slate-800">
+        <footer className="bg-slate-50 border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               
@@ -259,11 +255,11 @@ export default function RootLayout({
                   <div className="w-8 h-8 rounded-lg bg-[#c8a94c] flex items-center justify-center text-white font-bold text-sm">
                     AH
                   </div>
-                  <span className="font-bold text-sm text-white tracking-wide uppercase">
+                  <span className="font-bold text-sm text-slate-800 tracking-wide uppercase">
                     Ayuda Humanitaria Bolivia
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+                <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
                   Sistema gubernamental de articulación social e interinstitucional para la mitigación, atención y monitoreo transparente de recursos en crisis y catástrofes humanitarias.
                 </p>
                 <div className="text-xs text-slate-400 font-medium">
@@ -272,40 +268,37 @@ export default function RootLayout({
               </div>
 
               <div>
-                <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
+                <h4 className="text-slate-700 text-xs font-bold uppercase tracking-wider mb-3">
                   Accesos Rápidos
                 </h4>
                 <ul className="space-y-2 text-xs">
                   <li>
-                    <Link href="/organizaciones" className="hover:text-white transition-colors">Directorio de Organizaciones</Link>
+                    <Link href="/centro-informacion" className="text-slate-500 hover:text-slate-900 transition-colors">Comunicados Oficiales</Link>
                   </li>
                   <li>
-                    <Link href="/centro-informacion" className="hover:text-white transition-colors">Comunicados Oficiales</Link>
+                    <Link href="/ayuda" className="text-slate-500 hover:text-slate-900 transition-colors">Solicitudes de Asistencia</Link>
                   </li>
                   <li>
-                    <Link href="/ayuda" className="hover:text-white transition-colors">Solicitudes de Asistencia</Link>
-                  </li>
-                  <li>
-                    <Link href="/hospitales" className="hover:text-white transition-colors">Monitor de Establecimientos</Link>
+                    <Link href="/reportes" className="text-slate-500 hover:text-slate-900 transition-colors">Reportes Ciudadanos</Link>
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
+                <h4 className="text-slate-700 text-xs font-bold uppercase tracking-wider mb-3">
                   Seguridad y Control
                 </h4>
                 <ul className="space-y-2 text-xs">
                   <li>
-                    <Link href="/login" className="hover:text-white transition-colors">Acceso Restringido</Link>
+                    <Link href="/login" className="text-slate-500 hover:text-slate-900 transition-colors">Acceso Restringido</Link>
                   </li>
                   <li>
-                    <span className="text-emerald-400 flex items-center gap-1 font-semibold select-none">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span className="text-emerald-600 flex items-center gap-1 font-semibold select-none">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
                       Canal Cifrado SSL
                     </span>
                   </li>
-                  <li className="text-slate-500 font-mono text-[10px] mt-2">
+                  <li className="text-slate-400 font-mono text-[10px] mt-2">
                     Versión: 2026.1.4<br />
                     ORM: Prisma 5.10
                   </li>
@@ -314,13 +307,13 @@ export default function RootLayout({
 
             </div>
 
-            <div className="h-[1px] bg-slate-800 my-8"></div>
+            <div className="h-[1px] bg-slate-200 my-8"></div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-4">
               <p>© {new Date().getFullYear()} Plataforma Nacional de Ayuda Humanitaria. Todos los derechos reservados.</p>
               <p className="flex items-center gap-4">
-                <a href="#" className="hover:text-slate-350 transition-colors">Términos de Uso</a>
-                <a href="#" className="hover:text-slate-350 transition-colors">Política de Datos Confidenciales</a>
+                <a href="#" className="hover:text-slate-600 transition-colors">Términos de Uso</a>
+                <a href="#" className="hover:text-slate-600 transition-colors">Política de Datos Confidenciales</a>
               </p>
             </div>
 

@@ -3,52 +3,29 @@
 import React, { useEffect, useState } from 'react';
 import {
   FileText,
-  MessageSquare,
   CheckCircle,
   MapPin,
   Calendar,
-  Building,
-  UserCheck,
   Megaphone,
   Plane,
-  Clock
+  Clock,
+  UserCheck,
+  Building
 } from 'lucide-react';
 import { HelpApi } from '../../lib/api';
 
 export default function CentroInformacionPage() {
   const [comunicados, setComunicados] = useState<any[]>([]);
-  const [pronunciamientos, setPronunciamientos] = useState<any[]>([]);
   const [acciones, setAcciones] = useState<any[]>([]);
-  const [orgs, setOrgs] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'OFICIALES' | 'ORGANIZACIONES' | 'PUENTES_AEREOS'>('OFICIALES');
+  const [activeTab, setActiveTab] = useState<'OFICIALES' | 'PUENTES_AEREOS'>('OFICIALES');
 
-  // Interactive signing state
-  const [signingPronId, setSigningPronId] = useState<string | null>(null);
-  const [selectedOrgName, setSelectedOrgName] = useState<string>('');
-  const [signingSuccess, setSigningSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     HelpApi.init();
     setComunicados(HelpApi.getComunicados());
-    setPronunciamientos(HelpApi.getPronunciamientos());
     setAcciones(HelpApi.getAccionesRealizadas());
-    setOrgs(HelpApi.getOrganizaciones());
   }, []);
 
-  const handleGiveRespaldo = (pronId: string) => {
-    if (!selectedOrgName) return;
-
-    const updated = HelpApi.respaldarPronunciamiento(pronId, selectedOrgName);
-    if (updated) {
-      setPronunciamientos(HelpApi.getPronunciamientos());
-      setSigningSuccess(`¡Respaldo registrado con éxito como ${selectedOrgName}!`);
-      setTimeout(() => {
-        setSigningSuccess(null);
-        setSigningPronId(null);
-        setSelectedOrgName('');
-      }, 2000);
-    }
-  };
 
   // Logistics metrics for Puentes Aéreos
   const totalTons = acciones
@@ -89,16 +66,6 @@ export default function CentroInformacionPage() {
         >
           <FileText className="w-4 h-4" />
           Boletines Oficiales ({comunicados.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('ORGANIZACIONES')}
-          className={`flex items-center gap-2 px-6 py-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 -mb-[2px] shrink-0 ${activeTab === 'ORGANIZACIONES'
-            ? 'border-blue-600 text-blue-600 font-extrabold'
-            : 'border-transparent text-slate-550 hover:text-slate-900'
-            }`}
-        >
-          <MessageSquare className="w-4 h-4" />
-          Pronunciamientos de Organizaciones ({pronunciamientos.length})
         </button>
         <button
           onClick={() => setActiveTab('PUENTES_AEREOS')}
@@ -168,142 +135,20 @@ export default function CentroInformacionPage() {
           )
         )}
 
-        {/* TAB 2: PRONUNCIAMIENTOS */}
-        {activeTab === 'ORGANIZACIONES' && (
-          pronunciamientos.length > 0 ? (
-            pronunciamientos.map(pron => (
-              <div
-                key={pron.id}
-                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:border-slate-350 transition-all text-left space-y-5 hover-lift"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                  <div className="flex items-center gap-2">
-                    {pron.organizacion?.logo ? (
-                      <img
-                        src={pron.organizacion.logo}
-                        alt="Logo"
-                        className="w-6 h-6 rounded-full object-cover border border-slate-200"
-                      />
-                    ) : (
-                      <Building className="w-5 h-5 text-slate-400" />
-                    )}
-                    <span className="text-xs font-bold text-slate-800">
-                      {pron.organizacion?.nombre || 'Organización'}
-                    </span>
-                    <span className="px-2 py-0.5 rounded text-[8px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wider border border-slate-150">
-                      {pron.organizacion?.tipo || 'Sociedad Civil'}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-[11px] text-slate-400 font-semibold">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{new Date(pron.fechaHora).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {pron.organizacion?.ciudad}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug">
-                    {pron.titulo}
-                  </h3>
-                  <p className="text-xs text-slate-650 leading-relaxed whitespace-pre-line bg-slate-50/50 p-4 rounded-xl border border-slate-100 italic">
-                    "{pron.contenido}"
-                  </p>
-                </div>
-
-                {/* Backing signatures / Endorsements list */}
-                <div className="border-t border-slate-100 pt-4 space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
-                      <span className="bg-emerald-50 text-emerald-700 border border-emerald-250 text-[10px] px-2.5 py-1 rounded-md">
-                        {pron.respaldos || 0} Respaldos Institucionales
-                      </span>
-                      {pron.organizacionesRespaldadoras && pron.organizacionesRespaldadoras.length > 0 && (
-                        <div className="flex flex-wrap gap-1 items-center">
-                          <span className="text-[10px] text-slate-450 font-normal mr-1">Firmado por:</span>
-                          {pron.organizacionesRespaldadoras.map((orgName: string, index: number) => (
-                            <span key={index} className="bg-slate-150 text-slate-700 text-[9px] font-bold px-2 py-0.5 rounded border border-slate-200">
-                              {orgName}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => setSigningPronId(signingPronId === pron.id ? null : pron.id)}
-                      className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] uppercase tracking-wider py-2 px-4 rounded-lg shadow-sm hover-lift transition-all flex items-center gap-1.5"
-                    >
-                      <UserCheck className="w-3.5 h-3.5" />
-                      Dar Respaldo
-                    </button>
-                  </div>
-
-                  {/* Endorsement Dropdown Form */}
-                  {signingPronId === pron.id && (
-                    <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3 animate-fade-in">
-                      <p className="text-[11px] font-bold text-slate-800">
-                        Seleccione su organización registrada para avalar este pronunciamiento:
-                      </p>
-
-                      {signingSuccess && (
-                        <div className="p-2 border border-emerald-250 bg-emerald-50 rounded-lg text-emerald-700 font-bold text-[10px]">
-                          {signingSuccess}
-                        </div>
-                      )}
-
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <select
-                          className="flex-1 bg-white border border-slate-350 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500"
-                          value={selectedOrgName}
-                          onChange={(e) => setSelectedOrgName(e.target.value)}
-                        >
-                          <option value="">-- Seleccionar Organización --</option>
-                          {orgs.map((o) => (
-                            <option key={o.id} value={o.nombre}>
-                              {o.nombre} ({o.tipo})
-                            </option>
-                          ))}
-                        </select>
-
-                        <button
-                          onClick={() => handleGiveRespaldo(pron.id)}
-                          disabled={!selectedOrgName}
-                          className="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-[10px] uppercase py-2 px-5 rounded-lg transition-colors"
-                        >
-                          Confirmar Firma
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 text-slate-400 text-xs">
-              No hay pronunciamientos de organizaciones registrados en el sistema.
-            </div>
-          )
-        )}
-
         {/* TAB 3: PUENTES AEREOS & ACCIONES LOGISTICAS */}
         {activeTab === 'PUENTES_AEREOS' && (
           <div className="space-y-6">
             {/* Logistical Metrics Dashboard Panel */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-gradient-to-r from-blue-900 to-blue-950 text-white p-5 rounded-2xl shadow-sm text-left relative overflow-hidden group">
+              <div className="bg-blue-50 border border-blue-100 p-5 rounded-2xl shadow-sm text-left relative overflow-hidden group">
                 <div className="absolute right-3 top-3 opacity-15">
-                  <Plane className="w-16 h-16 text-white group-hover:scale-110 transition-transform duration-500" />
+                  <Plane className="w-16 h-16 text-blue-600 group-hover:scale-110 transition-transform duration-500" />
                 </div>
-                <span className="text-[9px] font-bold text-blue-350 uppercase tracking-widest block">Insumos Críticos Desplazados</span>
-                <span className="text-2xl font-black mt-1 block">
-                  {totalTons.toFixed(1)} <span className="text-xs font-bold text-slate-350">Toneladas</span>
+                <span className="text-[9px] font-bold text-blue-600 uppercase tracking-widest block">Insumos Críticos Desplazados</span>
+                <span className="text-2xl font-black text-slate-900 mt-1 block">
+                  {totalTons.toFixed(1)} <span className="text-xs font-bold text-slate-500">Toneladas</span>
                 </span>
-                <p className="text-[10px] text-slate-350 mt-1.5 leading-snug">
+                <p className="text-[10px] text-slate-500 mt-1.5 leading-snug">
                   Medicamentos, cilindros de oxígeno y raciones secas enviadas por aire.
                 </p>
               </div>

@@ -6,14 +6,11 @@ import path from 'path';
 
 // Import router modules
 import authRoutes from './routes/auth';
-import organizacionRoutes from './routes/organizaciones';
 import ayudaRoutes from './routes/ayudas';
-import hospitalRoutes from './routes/hospitales';
 import reporteRoutes from './routes/reportes';
 import victimaRoutes from './routes/victimas';
 import logRoutes from './routes/logs';
 import comunicadoRoutes from './routes/comunicados';
-import pronunciamientoRoutes from './routes/pronunciamientos';
 
 const app = express();
 
@@ -61,14 +58,11 @@ app.get('/api/health', (req, res) => {
 
 // Register REST Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/organizaciones', organizacionRoutes);
 app.use('/api/ayudas', ayudaRoutes);
-app.use('/api/hospitales', hospitalRoutes);
 app.use('/api/reportes', reporteRoutes);
 app.use('/api/victimas', victimaRoutes);
 app.use('/api/logs', logRoutes);
 app.use('/api/comunicados', comunicadoRoutes);
-app.use('/api/pronunciamientos', pronunciamientoRoutes);
 
 // Centralized error-handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

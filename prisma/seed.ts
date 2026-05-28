@@ -87,100 +87,6 @@ async function main() {
 
   console.log('Default users seeded successfully.');
 
-  // 4. Seed Organizations
-  const org1 = await prisma.organizacion.create({
-    data: {
-      nombre: 'Cruz Roja Boliviana',
-      responsable: 'Dr. Enrique Bustamente',
-      contacto: '+591 2 2202020',
-      email: 'contacto@cruzroja.org.bo',
-      departamentoId: 'LP',
-      ciudad: 'La Paz',
-      descripcion: 'Institución de ayuda humanitaria voluntaria con presencia nacional, dedicada a socorrer en emergencias y desastres.',
-      logo: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=150',
-      web: 'https://cruzroja.org.bo',
-      tipo: 'ONG',
-      sector: 'Salud',
-      verificado: true,
-    },
-  });
-
-  const org2 = await prisma.organizacion.create({
-    data: {
-      nombre: 'Cámara de Industria y Comercio (CAINCO)',
-      responsable: 'Lic. Mario Anglarill',
-      contacto: '+591 3 3383300',
-      email: 'ayuda@cainco.org.bo',
-      departamentoId: 'SC',
-      ciudad: 'Santa Cruz de la Sierra',
-      descripcion: 'Consorcio empresarial que articula donaciones de alimentos, insumos médicos y logística de transporte privado.',
-      logo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=150',
-      web: 'https://cainco.org.bo',
-      tipo: 'EMPRESA_PRIVADA',
-      sector: 'Logística',
-      verificado: true,
-    },
-  });
-
-  const org3 = await prisma.organizacion.create({
-    data: {
-      nombre: 'Cáritas Boliviana',
-      responsable: 'Hermana Beatriz Mendez',
-      contacto: '+591 4 6451221',
-      email: 'caritas@iglesia.org.bo',
-      departamentoId: 'CB',
-      ciudad: 'Cochabamba',
-      descripcion: 'Organización eclesial de ayuda solidaria enfocada en el acopio y distribución de alimentos y albergues transitorios.',
-      logo: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=150',
-      web: 'https://caritas.org.bo',
-      tipo: 'FUNDACION',
-      sector: 'Alimentación',
-      verificado: true,
-    },
-  });
-
-  console.log('Organizations seeded.');
-
-  // 5. Seed Hospitals with Oxygen Level details
-  await prisma.hospital.createMany({
-    data: [
-      {
-        nombre: 'Hospital de Clínicas - Unidad de Emergencias',
-        departamentoId: 'LP',
-        oxigenoDisponibilidad: 'LIMITADO',
-        camasLibres: 4,
-        estadoGeneral: 'ALERTA',
-        responsableNombre: 'Dra. Patricia Siles',
-        responsableContacto: '77299182',
-        reportadoPorId: verifier.id,
-        fechaReporte: new Date(),
-      },
-      {
-        nombre: 'Hospital Japonés - Santa Cruz',
-        departamentoId: 'SC',
-        oxigenoDisponibilidad: 'CRITICO',
-        camasLibres: 1,
-        estadoGeneral: 'EMERGENCIA',
-        responsableNombre: 'Dr. Grover Soleto',
-        responsableContacto: '78451122',
-        reportadoPorId: verifier.id,
-        fechaReporte: new Date(),
-      },
-      {
-        nombre: 'Hospital Viedma - Cochabamba',
-        departamentoId: 'CB',
-        oxigenoDisponibilidad: 'SUFICIENTE',
-        camasLibres: 12,
-        estadoGeneral: 'ESTABLE',
-        responsableNombre: 'Dr. Marcelo Claros',
-        responsableContacto: '70712345',
-        reportadoPorId: verifier.id,
-        fechaReporte: new Date(),
-      },
-    ],
-  });
-  console.log('Hospitals seeded.');
-
   // 6. Seed Help Requests
   await prisma.ayudaHumanitaria.createMany({
     data: [
@@ -240,16 +146,6 @@ async function main() {
     },
   });
 
-  // 8. Seed Official Pronunciamientos from Organizations
-  await prisma.pronunciamiento.create({
-    data: {
-      titulo: 'Pronunciamiento de Cruz Roja Boliviana ante los hechos en Bajo Llojeta',
-      contenido: 'La Cruz Roja Boliviana expresa su profunda solidaridad con las familias afectadas por el deslizamiento en la zona de Bajo Llojeta en la ciudad de La Paz. Informamos que nuestros equipos de voluntarios ya se encuentran desplegados brindando primeros auxilios, apoyo psicológico y coordinando la distribución de albergue temporal junto con las autoridades municipales e institucionales nacionales.',
-      organizacionId: org1.id,
-      autorId: moderator.id,
-      estado: 'VERIFICADO',
-    },
-  });
   console.log('Official announcements seeded.');
 
   // 9. Seed Citizen Reports for verification
