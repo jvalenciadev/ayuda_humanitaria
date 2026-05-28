@@ -72,19 +72,19 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-[#c8a94c] selection:text-white antialiased">
         
         {/* Institutional Top Bar Banner */}
-        <div className="bg-[#c8a94c] text-slate-900 text-[11px] font-semibold tracking-wider uppercase py-1.5 px-4 flex justify-between items-center shadow-inner select-none">
-          <div className="flex items-center gap-1.5">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Plataforma Institucional Oficial • Estado Plurinacional de Bolivia
+        <div className="bg-[#8d702a] text-amber-50 text-[10px] font-bold tracking-widest uppercase py-1.5 px-4 sm:px-6 flex justify-between items-center select-none">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Estado Plurinacional de Bolivia · Plataforma Oficial</span>
           </div>
-          <div className="hidden sm:flex items-center gap-4">
-            <span>Coordinación Interinstitucional de Emergencias</span>
-            <span>Contacto Nacional: 122 / 800-10-1111</span>
+          <div className="hidden sm:flex items-center gap-5">
+            <span className="flex items-center gap-1.5">🏛️ Coordinación Interinstitucional de Emergencias</span>
+            <span className="flex items-center gap-1">📞 <strong>122</strong> · 800-10-1111</span>
           </div>
         </div>
 
         {/* Global Navigation Header */}
-        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-200">
+        <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-md border-b border-slate-200/80 shadow-[0_1px_0_rgba(0,0,0,.06)] transition-all duration-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             
             {/* Logo and Brand */}
@@ -112,12 +112,12 @@ export default function RootLayout({
                     key={link.href}
                     href={link.href}
                     className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-                      isActive 
-                        ? 'bg-blue-50 text-blue-700 font-bold border border-blue-100 shadow-sm' 
-                        : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
+                      isActive
+                        ? 'bg-amber-50 text-[#8d702a] font-bold border border-amber-200 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-blue-700' : 'text-slate-400'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#c8a94c]' : 'text-slate-400'}`} />
                     {link.label}
                   </Link>
                 );
@@ -156,10 +156,10 @@ export default function RootLayout({
               ) : (
                 <Link
                   href="/login"
-                  className="flex items-center gap-1.5 text-xs font-bold text-blue-700 bg-blue-50/80 hover:bg-blue-100 border border-blue-200/80 px-4 py-2 rounded-lg shadow-sm hover-lift transition-all"
+                  className="flex items-center gap-1.5 text-xs font-bold text-[#8d702a] bg-amber-50 hover:bg-amber-100 border border-amber-200 px-4 py-2 rounded-lg shadow-sm hover-lift transition-all"
                 >
                   <LogIn className="w-3.5 h-3.5" />
-                  Acceso Servidor Público
+                  Acceso Institucional
                 </Link>
               )}
             </div>
@@ -183,7 +183,7 @@ export default function RootLayout({
 
           {/* Mobile Navigation Drawer */}
           {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1 shadow-lg animate-fade-in">
+            <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1 shadow-lg animate-slide-down">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -192,9 +192,9 @@ export default function RootLayout({
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-semibold ${
-                      isActive 
-                        ? 'bg-blue-50 text-blue-700 font-bold' 
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      isActive
+                        ? 'bg-amber-50 text-[#8d702a] font-bold border border-amber-100'
                         : 'text-slate-600 hover:bg-slate-50'
                     }`}
                   >
@@ -229,10 +229,10 @@ export default function RootLayout({
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-semibold text-blue-700 bg-blue-50 text-center justify-center border border-blue-100"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold text-[#8d702a] bg-amber-50 justify-center border border-amber-200 transition-all"
                 >
                   <LogIn className="w-4 h-4" />
-                  Acceso Servidor Público
+                  Acceso Institucional
                 </Link>
               )}
             </div>
